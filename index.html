@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharda SelfStudy — Learn. Track. Grow.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sharda SelfStudy — App Portal</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
             <div class="splash-loader">
                 <div class="spinner"></div>
             </div>
-            <button id="enter-portal-btn" class="btn btn-primary btn-lg" style="margin-top: 2rem; display: none;">Enter Portal</button>
+            <button id="enter-portal-btn" class="btn btn-primary btn-lg" style="margin-top: 2rem; display: none;">Launch App</button>
         </div>
     </div>
 
@@ -31,23 +31,23 @@
         <div class="auth-card">
             <div class="auth-header">
                 <span class="logo-sm">S²</span>
-                <h2>Sharda SelfStudy Portal</h2>
-                <p>Sign in or register to access your academic records</p>
+                <h2>Sharda SelfStudy</h2>
+                <p>Sign in to your academic portal</p>
             </div>
 
             <div class="auth-tabs">
                 <button class="tab-btn active" data-tab="login">Login</button>
-                <button class="tab-btn" data-tab="register">Student Register</button>
+                <button class="tab-btn" data-tab="register">Register</button>
             </div>
 
             <!-- Login Form -->
             <form id="login-form" class="auth-form">
                 <div class="form-group">
-                    <label for="login-email">Email Address</label>
+                    <label>Email Address</label>
                     <input type="email" id="login-email" required placeholder="student@sharda.edu">
                 </div>
                 <div class="form-group">
-                    <label for="login-password">Password</label>
+                    <label>Password</label>
                     <input type="password" id="login-password" required placeholder="••••••••">
                 </div>
                 <div class="form-actions-row">
@@ -59,23 +59,23 @@
             <!-- Register Form -->
             <form id="register-form" class="auth-form hidden">
                 <div class="form-group">
-                    <label for="reg-fullname">Full Name</label>
+                    <label>Full Name</label>
                     <input type="text" id="reg-fullname" required placeholder="Aarav Sharma">
                 </div>
                 <div class="form-group">
-                    <label for="reg-email">Email Address</label>
+                    <label>Email Address</label>
                     <input type="email" id="reg-email" required placeholder="student@sharda.edu">
                 </div>
                 <div class="form-group">
-                    <label for="reg-dob">Date of Birth</label>
+                    <label>Date of Birth</label>
                     <input type="date" id="reg-dob" required>
                 </div>
                 <div class="form-group">
-                    <label for="reg-password">Password (min 6 characters)</label>
+                    <label>Password</label>
                     <input type="password" id="reg-password" required placeholder="••••••••">
                 </div>
-                <p class="form-notice">New registrations require administrator approval before access is granted.</p>
-                <button type="submit" class="btn btn-primary w-100">Create Student Account</button>
+                <p class="form-notice">Accounts require admin approval before access.</p>
+                <button type="submit" class="btn btn-primary w-100">Register Student</button>
             </form>
 
             <div id="auth-error" class="alert alert-error hidden"></div>
@@ -83,70 +83,44 @@
         </div>
     </div>
 
-    <!-- 3. MAIN DASHBOARD CONTAINER (ADMIN / STUDENT) -->
+    <!-- 3. APP SHELL CONTAINER -->
     <div id="app-view" class="app-layout hidden">
         
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <span class="logo-sm">S²</span>
+        <!-- App Top Header Bar -->
+        <header class="app-topbar">
+            <div class="app-header-left">
+                <div id="topbar-avatar" class="avatar-placeholder sm">SS</div>
                 <div>
-                    <h3>Sharda Portal</h3>
-                    <small id="user-role-badge" class="role-badge">Loading...</small>
+                    <h3 id="app-screen-title">Dashboard</h3>
+                    <small id="app-user-greeting">Welcome back</small>
                 </div>
             </div>
+            <button id="logout-btn-top" class="icon-btn" title="Logout">🚪</button>
+        </header>
 
-            <nav class="sidebar-nav" id="sidebar-nav-links">
-                <!-- Dynamically populated based on role -->
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="user-mini-profile">
-                    <div id="sidebar-avatar" class="avatar-placeholder">SS</div>
-                    <div class="user-mini-info">
-                        <span id="sidebar-name" class="font-weight-600">User Name</span>
-                        <small id="sidebar-email">user@sharda.edu</small>
-                    </div>
-                </div>
-                <button id="logout-btn" class="btn btn-outline btn-sm w-100" style="margin-top: 1rem;">Logout</button>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <header class="topbar">
-                <div class="topbar-title">
-                    <h2 id="page-title">Dashboard</h2>
-                    <p id="page-subtitle">Welcome back to Sharda SelfStudy</p>
-                </div>
-                <div class="topbar-actions">
-                    <span id="current-date" class="text-muted">--</span>
-                </div>
-            </header>
-
-            <div id="dashboard-content" class="content-body">
-                <!-- Dynamic Views Render Here -->
-            </div>
+        <!-- Dynamic Content Body -->
+        <main class="app-content-body" id="dashboard-content">
+            <!-- Views render here -->
         </main>
+
+        <!-- App Bottom Navigation Bar -->
+        <nav class="app-bottom-nav" id="bottom-nav-links">
+            <!-- Dynamically populated based on role -->
+        </nav>
     </div>
 
-    <!-- GLOBAL MODAL CONTAINER -->
+    <!-- MODAL & TOAST CONTAINERS -->
     <div id="modal-container" class="modal-backdrop hidden">
         <div class="modal-card">
             <div class="modal-header">
-                <h3 id="modal-title">Modal Title</h3>
+                <h3 id="modal-title">Details</h3>
                 <button id="modal-close-btn" class="modal-close">&times;</button>
             </div>
-            <div id="modal-body" class="modal-body">
-                <!-- Modal content -->
-            </div>
+            <div id="modal-body" class="modal-body"></div>
         </div>
     </div>
-
-    <!-- Toast Notification Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- Supabase JS SDK via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="app.js"></script>
 </body>
