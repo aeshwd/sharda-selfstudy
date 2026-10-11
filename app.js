@@ -342,7 +342,6 @@ async function renderAdminStudents(container) {
 
     container.innerHTML = `
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>Registered Students (${students.length})</h3>
                 <input type="text" id="student-search" class="table-search" placeholder="Search by name or email...">
@@ -379,7 +378,6 @@ async function renderAdminStudents(container) {
                     `).join('')}
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 
@@ -400,7 +398,6 @@ async function renderAdminTests(container) {
 
     container.innerHTML = `
         <div class="table-container" style="margin-bottom: 2rem; padding: 1.5rem;">
-        <div class="table-responsive">
             <h3>Record New Test Result</h3>
             <form id="record-test-form" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                 <div class="form-group">
@@ -440,12 +437,9 @@ async function renderAdminTests(container) {
                     <button type="submit" class="btn btn-primary">Save Test Result</button>
                 </div>
             </form>
-            </div>
         </div>
 
-
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>Recorded Tests History</h3>
             </div>
@@ -464,7 +458,6 @@ async function renderAdminTests(container) {
                     <!-- Loaded dynamically -->
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 
@@ -525,7 +518,6 @@ async function renderAdminAttendance(container) {
 
     container.innerHTML = `
         <div class="table-container" style="padding: 1.5rem; margin-bottom: 2rem;">
-        <div class="table-responsive">
             <h3>Record Attendance Session</h3>
             <form id="attendance-form" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                 <div class="form-group">
@@ -554,7 +546,6 @@ async function renderAdminAttendance(container) {
                     <button type="submit" class="btn btn-primary">Save Attendance Record</button>
                 </div>
             </form>
-            </div>
         </div>
     `;
 
@@ -593,7 +584,6 @@ async function renderAdminApprovals(container) {
 
     container.innerHTML = `
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>Pending Student Approvals (${pending?.length || 0})</h3>
             </div>
@@ -622,7 +612,6 @@ async function renderAdminApprovals(container) {
                     `).join('') : `<tr><td colspan="5" style="text-align:center;">No pending student approvals.</td></tr>`}
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 }
@@ -708,7 +697,6 @@ async function renderStudentDashboard(container) {
             </div>
         </div>
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>Recent Test Results</h3>
             </div>
@@ -737,7 +725,6 @@ async function renderStudentDashboard(container) {
                     }).join('') : `<tr><td colspan="5" style="text-align:center;">No tests recorded.</td></tr>`}
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 }
@@ -747,7 +734,6 @@ async function renderStudentTests(container) {
 
     container.innerHTML = `
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>All Test Results</h3>
             </div>
@@ -778,7 +764,6 @@ async function renderStudentTests(container) {
                     }).join('') : `<tr><td colspan="6" style="text-align:center;">No test results recorded.</td></tr>`}
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 }
@@ -788,7 +773,6 @@ async function renderStudentAttendance(container) {
 
     container.innerHTML = `
         <div class="table-container">
-        <div class="table-responsive">
             <div class="table-header-action">
                 <h3>Attendance History</h3>
             </div>
@@ -810,7 +794,6 @@ async function renderStudentAttendance(container) {
                     `).join('') : `<tr><td colspan="3" style="text-align:center;">No attendance records available.</td></tr>`}
                 </tbody>
             </table>
-            </div>
         </div>
     `;
 }
@@ -818,7 +801,6 @@ async function renderStudentAttendance(container) {
 async function renderStudentProfile(container) {
     container.innerHTML = `
         <div class="table-container" style="padding: 2rem; max-width: 600px;">
-        <div class="table-responsive">
             <h3>Edit Personal Profile</h3>
             <form id="profile-form" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem;">
                 <div class="form-group">
@@ -844,7 +826,6 @@ async function renderStudentProfile(container) {
                 </div>
                 <button type="submit" class="btn btn-outline">Update Password</button>
             </form>
-            </div>
         </div>
     `;
 
