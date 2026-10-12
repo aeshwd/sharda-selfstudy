@@ -561,7 +561,7 @@ async function renderAdminTests(container) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No test results recorded yet.</td></tr>`;
     }
 
-    document.getElementById('record-test-form').addEventListener('submit', async (e) => {
+   document.getElementById('record-test-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const testName = document.getElementById('test-name').value;
         const subject = document.getElementById('test-subject').value;
@@ -575,6 +575,7 @@ async function renderAdminTests(container) {
             return;
         }
 
+        // 1. Insert the test result
         const { error } = await supabase.from('test_results').insert({
             student_id: studentId,
             test_name: testName,
@@ -584,11 +585,27 @@ async function renderAdminTests(container) {
             test_date: testDate
         });
 
-        if (error) showToast(error.message, 'error');
-        else {
-            showToast('Test result recorded successfully!', 'success');
-            renderAdminTests(container);
+        if (error) {
+            showToast(error.message, 'error');
+            return;
         }
+
+        // 2. Automatically create a notification for the student
+        const percentage = ((obtained / max) * 100).toFixed(1);
+        const { error: notifError } = await supabase.from('notifications').insert({
+            user_id: studentId,
+            title: 'New Test Result Recorded',
+            message: `Your test result for "${testName}" (${subject}) has been uploaded. You scored ${obtained}/${max} (${percentage}%).`,
+            type: 'success',
+            is_read: false
+        });
+
+        if (notifError) {
+            console.error('Failed to send notification:', notifError.message);
+        }
+
+        showToast('Test result recorded & notification sent!', 'success');
+        renderAdminTests(container);
     });
 }
 
