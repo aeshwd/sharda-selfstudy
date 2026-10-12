@@ -108,7 +108,18 @@
                         <small id="sidebar-email">user@sharda.edu</small>
                     </div>
                 </div>
-                <button id="logout-btn" class="btn btn-outline btn-sm w-100" style="margin-top: 1rem;">Logout</button>
+
+
+                <!-- Inside your sidebar footer/navigation section -->
+<div class="sidebar-footer" style="padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+    <!-- ADD THIS BUTTON -->
+    <button id="notification-btn" class="btn btn-outline btn-sm" style="position: relative; width: 100%;">
+        🔔 Notifications <span id="notif-badge" class="badge badge-danger hidden" style="position: absolute; top: 5px; right: 10px;">0</span>
+    </button>
+    
+    <button id="logout-btn" class="btn btn-danger btn-sm" style="width: 100%;">Logout</button>
+</div>
+                
             </div>
         </aside>
 
