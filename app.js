@@ -165,6 +165,9 @@ async function handleAuthSession(user) {
     updateSidebarUserInfo();
     renderNavigation();
     loadDashboardView();
+
+    // ADD THIS LINE HERE:
+    await initNotifications();
 }
 
 function updateSidebarUserInfo() {
@@ -180,6 +183,82 @@ function updateSidebarUserInfo() {
         const initials = currentProfile.full_name ? currentProfile.full_name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'SS';
         avatarEl.textContent = initials;
     }
+}
+
+
+// ==========================================
+// NOTIFICATIONS SYSTEM LOGIC
+// ==========================================
+async function initNotifications() {
+    if (!currentUser) return;
+
+    // Fetch unread notifications count
+    const { count, error } = await supabase
+        .from('notifications')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', currentUser.id)
+        .eq('is_read', false);
+
+    if (error) {
+        console.error('Error fetching notifications:', error.message);
+        return;
+    }
+
+    const badge = document.getElementById('notif-badge');
+    if (badge) {
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    // Attach click event to notification button to open the modal view
+    const notifBtn = document.getElementById('notification-btn');
+    if (notifBtn) {
+        notifBtn.onclick = () => openNotificationsModal();
+    }
+}
+
+async function openNotificationsModal() {
+    const { data: notifications, error } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        showToast(error.message, 'error');
+        return;
+    }
+
+    const modalContainer = document.getElementById('modal-container');
+    document.getElementById('modal-title').textContent = 'Your Notifications';
+    document.getElementById('modal-body').innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:0.75rem; max-height:400px; overflow-y:auto;">
+            ${(notifications && notifications.length > 0) ? notifications.map(n => `
+                <div style="padding:0.75rem; border:1px solid var(--border-color); border-radius:6px; background:${n.is_read ? 'transparent' : 'rgba(var(--primary-rgb), 0.05);'}">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>${n.title}</strong>
+                        <small class="text-muted">${new Date(n.created_at).toLocaleDateString()}</small>
+                    </div>
+                    <p style="margin-top:0.25rem; font-size:0.9rem;">${n.message}</p>
+                </div>
+            `).join('') : '<p style="text-align:center; color:var(--text-muted);">No notifications yet.</p>'}
+        </div>
+    `;
+    modalContainer.classList.remove('hidden');
+    document.getElementById('modal-close-btn').onclick = () => modalContainer.classList.add('hidden');
+
+    // Mark all as read when opening the modal
+    await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('user_id', currentUser.id)
+        .eq('is_read', false);
+    
+    initNotifications(); // Refresh badge count
 }
 
 // Navigation & View Rendering
